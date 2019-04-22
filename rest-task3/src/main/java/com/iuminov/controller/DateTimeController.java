@@ -8,7 +8,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 @Controller
-@RequestMapping("hello")
+@RequestMapping("current")
 @ResponseBody
 public class DateTimeController {
 
