@@ -1,5 +1,0 @@
-it/discovery/RestApplication.class
-it/discovery/model/Book.class
-it/discovery/repository/SimpleBookRepository.class
-it/discovery/controller/BookController.class
-it/discovery/repository/BookRepository.class
