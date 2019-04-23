@@ -9,6 +9,9 @@ import org.springframework.stereotype.Repository;
 
 import it.discovery.model.Book;
 
+import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlList;
+
 @Repository
 public class SimpleBookRepository implements BookRepository {
 	private final Map<Integer, Book> books = new ConcurrentHashMap<>();
