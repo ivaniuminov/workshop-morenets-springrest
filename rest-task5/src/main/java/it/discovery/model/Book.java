@@ -1,43 +1,46 @@
 package it.discovery.model;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement
 public class Book {
-	private int id;
+    private int id;
 
-	private String author;
+    private String author;
 
-	private String name;
-	
-	private int year;
+    private String name;
 
-	public int getId() {
-		return id;
-	}
+    private int year;
 
-	public void setId(int id) {
-		this.id = id;
-	}
+    public int getId() {
+        return id;
+    }
 
-	public String getAuthor() {
-		return author;
-	}
+    public void setId(int id) {
+        this.id = id;
+    }
 
-	public void setAuthor(String author) {
-		this.author = author;
-	}
+    public String getAuthor() {
+        return author;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public void setAuthor(String author) {
+        this.author = author;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public int getYear() {
-		return year;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public void setYear(int year) {
-		this.year = year;
-	}
+    public int getYear() {
+        return year;
+    }
+
+    public void setYear(int year) {
+        this.year = year;
+    }
 }
