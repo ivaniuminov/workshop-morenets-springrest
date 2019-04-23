@@ -52,6 +52,7 @@ public class BookController {
     }
 
     @DeleteMapping(path = "{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteBook(@PathVariable Integer id) {
         //repository.delete(id);
         jpaRepository.deleteById(id);
