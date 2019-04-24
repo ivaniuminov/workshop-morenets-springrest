@@ -6,6 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -23,8 +25,10 @@ public class Book {
 
     @JsonProperty("title")
     @XmlElement(name = "title")
+    @NotNull
     private String name;
 
+    @Positive
     private int year;
 
     public int getId() {
