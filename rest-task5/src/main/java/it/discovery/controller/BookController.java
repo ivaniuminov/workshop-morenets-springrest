@@ -9,9 +9,12 @@ import it.discovery.repository.BookJpaRepository;
 import it.discovery.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+
+import java.util.Optional;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE;
 import static org.springframework.http.MediaType.APPLICATION_XML_VALUE;
@@ -32,9 +35,12 @@ public class BookController {
     }
 
     @JsonXmlGet
-    public Book getBook(@PathVariable Integer id) {
+    public ResponseEntity<Book> getBook(@PathVariable Integer id) {
 //        return repository.findById(id);
-        return jpaRepository.findById(id).orElse(null);
+        Optional<Book> book = jpaRepository.findById(id);
+        return book.map(b -> new ResponseEntity<>(b, HttpStatus.OK))
+                       .orElseGet(() -> ResponseEntity.notFound().build());
+
     }
 
     @GetMapping(produces = {APPLICATION_JSON_UTF8_VALUE, APPLICATION_XML_VALUE})
