@@ -3,6 +3,7 @@ package it.discovery.controller;
 import it.discovery.annotation.JsonPost;
 import it.discovery.annotation.JsonPut;
 import it.discovery.annotation.JsonXmlGet;
+import it.discovery.exception.BookInvalidException;
 import it.discovery.model.Book;
 import it.discovery.model.BookList;
 import it.discovery.repository.BookJpaRepository;
@@ -13,7 +14,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-
 import java.util.Optional;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE;
@@ -38,9 +38,11 @@ public class BookController {
     public ResponseEntity<Book> getBook(@PathVariable Integer id) {
 //        return repository.findById(id);
         Optional<Book> book = jpaRepository.findById(id);
-        return book.map(b -> new ResponseEntity<>(b, HttpStatus.OK))
-                       .orElseGet(() -> ResponseEntity.notFound().build());
-
+        if (book.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        validateBook(book.get());
+        return new ResponseEntity<>(book.get(), HttpStatus.OK);
     }
 
     @GetMapping(produces = {APPLICATION_JSON_UTF8_VALUE, APPLICATION_XML_VALUE})
@@ -64,5 +66,11 @@ public class BookController {
     public void deleteBook(@PathVariable Integer id) {
         //repository.delete(id);
         jpaRepository.deleteById(id);
+    }
+
+    private void validateBook(Book book) {
+        if (book.getId() > 3) {
+            throw new BookInvalidException(book.getId());
+        }
     }
 }
