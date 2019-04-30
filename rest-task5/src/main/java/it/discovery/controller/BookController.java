@@ -69,6 +69,9 @@ public class BookController {
     }
 
     private void validateBook(Book book) {
+        if (book.getId() > 5) {
+            throw new NullPointerException();
+        }
         if (book.getId() > 3) {
             throw new BookInvalidException(book.getId());
         }
