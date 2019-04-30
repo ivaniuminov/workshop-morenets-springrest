@@ -3,6 +3,7 @@ package it.discovery.controller;
 import it.discovery.annotation.JsonPost;
 import it.discovery.annotation.JsonPut;
 import it.discovery.annotation.JsonXmlGet;
+import it.discovery.annotation.Logging;
 import it.discovery.exception.BookInvalidException;
 import it.discovery.model.Book;
 import it.discovery.model.BookList;
@@ -45,6 +46,7 @@ public class BookController {
         return new ResponseEntity<>(book.get(), HttpStatus.OK);
     }
 
+    @Logging
     @GetMapping(produces = {APPLICATION_JSON_UTF8_VALUE, APPLICATION_XML_VALUE})
     public BookList getAllBooks() {
         BookList bookList = new BookList();
@@ -54,6 +56,7 @@ public class BookController {
         return bookList;
     }
 
+    @Logging
     @JsonPut
     public void updateBook(@Valid @RequestBody Book book, @PathVariable Integer id) {
         book.setId(id);
