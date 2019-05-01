@@ -30,9 +30,9 @@ public class BookController {
 
     @ResponseStatus(HttpStatus.ACCEPTED)
     @JsonPost
-    public void createBook(@Valid @RequestBody Book book) {
+    public Book createBook(@Valid @RequestBody Book book) {
 //        repository.save(book);
-        jpaRepository.save(book);
+        return jpaRepository.save(book);
     }
 
     @JsonXmlGet
@@ -58,10 +58,10 @@ public class BookController {
 
     @Logging
     @JsonPut
-    public void updateBook(@Valid @RequestBody Book book, @PathVariable Integer id) {
+    public Book updateBook(@Valid @RequestBody Book book, @PathVariable Integer id) {
         book.setId(id);
         //repository.save(book);
-        jpaRepository.save(book);
+        return jpaRepository.save(book);
     }
 
     @DeleteMapping(path = "{id}")

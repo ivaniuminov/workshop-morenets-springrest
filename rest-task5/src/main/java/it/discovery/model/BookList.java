@@ -24,4 +24,11 @@ public class BookList {
     public List<Book> getBooks() {
         return books;
     }
+
+    @Override
+    public String toString() {
+        return "BookList{" +
+                       "books=" + books +
+                       '}';
+    }
 }
