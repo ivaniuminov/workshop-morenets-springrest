@@ -7,9 +7,12 @@ import it.discovery.annotation.Logging;
 import it.discovery.exception.BookInvalidException;
 import it.discovery.model.Book;
 import it.discovery.model.BookList;
+import it.discovery.pagination.PageCriteria;
 import it.discovery.repository.BookJpaRepository;
 import it.discovery.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -47,13 +50,16 @@ public class BookController {
     }
 
     @Logging
-    @GetMapping(produces = {APPLICATION_JSON_UTF8_VALUE, APPLICATION_XML_VALUE})
-    public BookList getAllBooks() {
+    @GetMapping(produces = {APPLICATION_JSON_UTF8_VALUE, APPLICATION_XML_VALUE}, params = {"size", "page"})
+    public ResponseEntity<BookList> getAllBooks(PageCriteria criteria) {
         BookList bookList = new BookList();
         //bookList.setBooks(repository.findAll());
-        bookList.setBooks(jpaRepository.findAll());
+        Page<Book> bookPage = jpaRepository.findAll(PageRequest.of(criteria.getPage(), criteria.getSize()));
+        bookList.setBooks(bookPage.getContent());
 
-        return bookList;
+        return ResponseEntity.ok()
+                       .header("X-Total-Count", String.valueOf(bookPage.getTotalElements()))
+                       .body(bookList);
     }
 
     @Logging
